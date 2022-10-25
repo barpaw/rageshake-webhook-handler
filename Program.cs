@@ -74,8 +74,28 @@ app.MapPost("/handle-rageshake-webhook", async (RageshakeWebhook rageshakeWebhoo
     sb.Append($"Version: {rageshakeWebhook?.Data?.Version}");
     sb.Append(Environment.NewLine);
     sb.Append($"app_language: {rageshakeWebhook?.Data?.AppLanguage}");
-    sb.Append(Environment.NewLine);
-    sb.Append($"app_language: {rageshakeWebhook?.Data?.AutoUisi}");
+
+    if (rageshakeWebhook is not null && rageshakeWebhook.Data is not null && rageshakeWebhook.Data.AutoUisi is not null)
+    {
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_session_id: {rageshakeWebhook?.Data?.AutoUisi?.SessionId}");
+
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_sender_key: {rageshakeWebhook?.Data?.AutoUisi?.SenderKey}");
+
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_device_id: {rageshakeWebhook?.Data?.AutoUisi?.DeviceId}");
+
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_user_id: {rageshakeWebhook?.Data?.AutoUisi?.UserId}");
+
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_event_id: {rageshakeWebhook?.Data?.AutoUisi?.EventId}");
+
+        sb.Append(Environment.NewLine);
+        sb.Append($"uisi_room_id: {rageshakeWebhook?.Data?.AutoUisi?.RoomId}");
+    }
+
     sb.Append(Environment.NewLine);
     sb.Append($"build: {rageshakeWebhook?.Data?.Build}");
     sb.Append(Environment.NewLine);
@@ -119,7 +139,6 @@ app.MapPost("/handle-rageshake-webhook", async (RageshakeWebhook rageshakeWebhoo
     }
 
     sb.Append(Environment.NewLine);
-
     sb.Append($"logErrors: {rageshakeWebhook?.LogErrors}");
 
     sb.Append(Environment.NewLine);
@@ -149,7 +168,7 @@ public record Data(
     [property: JsonPropertyName("User-Agent")] string UserAgent,
     [property: JsonPropertyName("Version")] string Version,
     [property: JsonPropertyName("app_language")] string AppLanguage,
-    [property: JsonPropertyName("auto_uisi")] string AutoUisi,
+    [property: JsonPropertyName("auto_uisi")] Uisi AutoUisi,
     [property: JsonPropertyName("build")] string Build,
     [property: JsonPropertyName("default_app_language")] string DefaultAppLanguage,
     [property: JsonPropertyName("device")] string Device,
@@ -163,6 +182,16 @@ public record Data(
     [property: JsonPropertyName("user_id")] string UserId,
     [property: JsonPropertyName("utc_time")] string UtcTime
 );
+
+public record Uisi(
+    [property: JsonPropertyName("session_id")] string SessionId,
+    [property: JsonPropertyName("sender_key")] string SenderKey,
+    [property: JsonPropertyName("device_id")] string DeviceId,
+    [property: JsonPropertyName("user_id")] string UserId,
+    [property: JsonPropertyName("event_id")] string EventId,
+    [property: JsonPropertyName("room_id")] string RoomId
+);
+
 
 public record RageshakeWebhook(
     [property: JsonPropertyName("id")] string Id,
