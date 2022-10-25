@@ -75,6 +75,8 @@ app.MapPost("/handle-rageshake-webhook", async (RageshakeWebhook rageshakeWebhoo
     sb.Append(Environment.NewLine);
     sb.Append($"app_language: {rageshakeWebhook?.Data?.AppLanguage}");
     sb.Append(Environment.NewLine);
+    sb.Append($"app_language: {rageshakeWebhook?.Data?.AutoUisi}");
+    sb.Append(Environment.NewLine);
     sb.Append($"build: {rageshakeWebhook?.Data?.Build}");
     sb.Append(Environment.NewLine);
     sb.Append($"default_app_language: {rageshakeWebhook?.Data?.DefaultAppLanguage}");
@@ -100,12 +102,12 @@ app.MapPost("/handle-rageshake-webhook", async (RageshakeWebhook rageshakeWebhoo
     sb.Append($"utc_time: {rageshakeWebhook?.Data?.UtcTime}");
 
     //RAGESHAKE WEBHOOK PART II
-    sb.Append(Environment.NewLine);
 
     if (rageshakeWebhook is not null && rageshakeWebhook.Labels is not null && rageshakeWebhook.Labels.Any())
     {
         foreach (var label in rageshakeWebhook.Labels)
         {
+            sb.Append(Environment.NewLine);
             sb.Append($"label: {label}");
         }
     }
@@ -147,6 +149,7 @@ public record Data(
     [property: JsonPropertyName("User-Agent")] string UserAgent,
     [property: JsonPropertyName("Version")] string Version,
     [property: JsonPropertyName("app_language")] string AppLanguage,
+    [property: JsonPropertyName("auto_uisi")] string AutoUisi,
     [property: JsonPropertyName("build")] string Build,
     [property: JsonPropertyName("default_app_language")] string DefaultAppLanguage,
     [property: JsonPropertyName("device")] string Device,
