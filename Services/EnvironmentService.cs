@@ -1,4 +1,3 @@
-using RageshakeWebhookHandler.Consts;
 using RageshakeWebhookHandler.Dtos;
 
 namespace RageshakeWebhookHandler.Services;
@@ -14,58 +13,54 @@ public class EnvironmentService : IEnvironmentService
 
     public EnvsDto GetEnvDto()
     {
-        if (CheckIfEnvVariablesAreSetAndNotEmpty())
+        
+        var rageshakeDomain = Environment.GetEnvironmentVariable("RAGESHAKE_DOMAIN");
+        var rageshakeDomainToBeReplaced =
+            Environment.GetEnvironmentVariable("RAGESHAKE_DOMAIN_TO_BE_REPLACED");
+        var matrixHomeserverUser =
+            Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_USER");
+        var matrixHomeserverPasswd =
+            Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_PASSWD");
+        var matrixHomeserverUrl =
+            Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_URL");
+        var matrixHomeserverRoom =
+            Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_ROOM");
+        var matrixNotifierUrl =
+            Environment.GetEnvironmentVariable("MATRIX_NOTIFIER_URL");
+        var matrixNotifierMessageHeader =
+            Environment.GetEnvironmentVariable("MATRIX_NOTIFIER_MESSAGE_HEADER");
+
+        var rageshakeDomainCondition = rageshakeDomain is not null && rageshakeDomain.Length > 0;
+        var rageshakeDomainToBeReplacedCondition = rageshakeDomainToBeReplaced is not null && rageshakeDomainToBeReplaced.Length > 0;
+        var matrixHomeserverUserCondition = matrixHomeserverUser is not null && matrixHomeserverUser.Length > 0;
+        var matrixHomeserverPasswdCondition = matrixHomeserverPasswd is not null && matrixHomeserverPasswd.Length > 0;
+        var matrixHomeserverUrlCondition = matrixHomeserverUrl is not null && matrixHomeserverUrl.Length > 0;
+        var matrixHomeserverRoomCondition = matrixHomeserverRoom is not null && matrixHomeserverRoom.Length > 0;
+        var matrixNotifierUrlCondition = matrixNotifierUrl is not null && matrixNotifierUrl.Length > 0;
+        var matrixNotifierMessageHeaderCondition = matrixNotifierMessageHeader is not null && matrixNotifierMessageHeader.Length > 0;
+
+        if (rageshakeDomainCondition && rageshakeDomainToBeReplacedCondition && matrixHomeserverUserCondition &&
+            matrixHomeserverPasswdCondition && matrixHomeserverUrlCondition && matrixHomeserverRoomCondition &&
+            matrixNotifierUrlCondition && matrixNotifierMessageHeaderCondition)
         {
             var envsDto = new EnvsDto();
 
-            envsDto.RageshakeDomain = Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.RageshakeDomain)) ??
-                                      string.Empty;
-            envsDto.RageshakeDomainToBeReplaced =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.RageshakeDomainToBeReplaced)) ??
-                string.Empty;
-            envsDto.MatrixHomeserverUser =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixHomeserverUser)) ?? string.Empty;
-            envsDto.MatrixHomeserverPasswd =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixHomeserverPasswd)) ?? string.Empty;
-            envsDto.MatrixHomeserverUrl =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixHomeserverUrl)) ?? string.Empty;
-            envsDto.MatrixHomeserverRoom =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixHomeserverRoom)) ?? string.Empty;
-            envsDto.MatrixNotifierUrl =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixNotifierUrl)) ?? string.Empty;
-            envsDto.MatrixNotifierMessageHeader =
-                Environment.GetEnvironmentVariable(GetEnvValue(EnvVarsKeys.MatrixNotifierMessageHeader)) ??
-                string.Empty;
-
+            envsDto.RageshakeDomain = rageshakeDomain;
+            envsDto.RageshakeDomainToBeReplaced = rageshakeDomainToBeReplaced;
+            envsDto.MatrixHomeserverUser = matrixHomeserverUser;
+            envsDto.MatrixHomeserverPasswd = matrixHomeserverPasswd;
+            envsDto.MatrixHomeserverUrl = matrixHomeserverUrl;
+            envsDto.MatrixHomeserverRoom = matrixHomeserverRoom;
+            envsDto.MatrixNotifierUrl = matrixNotifierUrl;
+            envsDto.MatrixNotifierMessageHeader = matrixNotifierMessageHeader;
+        
             return envsDto;
         }
+        else
+        {
+            throw new Exception("One or more env vars is/are null/empty");
+        }
 
-        throw new Exception("Found empty env vars");
     }
-
-    private bool CheckIfEnvVariablesAreSetAndNotEmpty()
-    {
-        var envs = EnvVarsKeys.EnvVariablesKeys;
-
-        foreach (var env in envs)
-            if (env.Length > 0)
-            {
-                _logger.LogWarning("Env: {Env} is empty", env);
-                return false;
-            }
-
-        return true;
-    }
-
-
-    private string GetEnvValue(string envKey)
-    {
-        var envs = EnvVarsKeys.EnvVariablesKeys;
-
-        foreach (var env in envs)
-            if (env.Equals(envKey))
-                return Environment.GetEnvironmentVariable(env) ?? string.Empty;
-
-        return string.Empty;
-    }
+    
 }

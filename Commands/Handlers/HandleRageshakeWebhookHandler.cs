@@ -30,6 +30,7 @@ public class HandleRageshakeWebhookHandler : IRequestHandler<HandleRageshakeWebh
         catch (Exception e)
         {
             _logger.LogError(e.Message);
+            _logger.LogError(e.StackTrace);
             return "Error";
         }
 

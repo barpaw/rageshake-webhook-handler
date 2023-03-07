@@ -43,6 +43,7 @@ public class MessageService : IMessageService
         sb.Append($"app_language: {rageshakeWebhook?.Data?.AppLanguage}");
 
         if (rageshakeWebhook is not null && rageshakeWebhook.Data is not null &&
+            rageshakeWebhook.Data.AutoUisi is not null && rageshakeWebhook.Data.AutoUisi.EventId is not null &&
             rageshakeWebhook.Data.AutoUisi.EventId.Length > 0)
         {
             sb.Append(Environment.NewLine);
@@ -116,9 +117,7 @@ public class MessageService : IMessageService
             $"listing_url: {rageshakeWebhook?.ListingUrl.Replace(envsDto.RageshakeDomainToBeReplaced, envsDto.RageshakeDomain)}");
 
         var message = sb.ToString();
-
-        _logger.LogInformation(message);
-
+        
         return message;
     }
 }
