@@ -84,6 +84,8 @@ public class MessageService : IMessageService
         sb.Append(Environment.NewLine);
         sb.Append($"olm_kit_version: {rageshakeWebhook?.Data?.OlmKitVersion}");
         sb.Append(Environment.NewLine);
+        sb.Append($"crypto_module_version: {rageshakeWebhook?.Data?.CryptoModuleVersion}");
+        sb.Append(Environment.NewLine);
         sb.Append($"os: {rageshakeWebhook?.Data?.Os}");
         sb.Append(Environment.NewLine);
         sb.Append($"user_id: {rageshakeWebhook?.Data?.UserId}");

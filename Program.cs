@@ -90,6 +90,8 @@ public record Data(
     string MatrixSdkVersion,
     [property: JsonPropertyName("olm_kit_version")]
     string OlmKitVersion,
+    [property: JsonPropertyName("crypto_module_version")]
+    string CryptoModuleVersion,
     [property: JsonPropertyName("os")] string Os,
     [property: JsonPropertyName("user_id")]
     string UserId,
