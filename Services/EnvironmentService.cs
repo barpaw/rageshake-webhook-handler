@@ -21,6 +21,8 @@ public class EnvironmentService : IEnvironmentService
             Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_USER");
         var matrixHomeserverPasswd =
             Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_PASSWD");
+        var matrixHomeserverDeviceId =
+            Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_DEVICEID");
         var matrixHomeserverUrl =
             Environment.GetEnvironmentVariable("MATRIX_HOMESERVER_URL");
         var matrixHomeserverRoom =
@@ -34,13 +36,14 @@ public class EnvironmentService : IEnvironmentService
         var rageshakeDomainToBeReplacedCondition = rageshakeDomainToBeReplaced is not null && rageshakeDomainToBeReplaced.Length > 0;
         var matrixHomeserverUserCondition = matrixHomeserverUser is not null && matrixHomeserverUser.Length > 0;
         var matrixHomeserverPasswdCondition = matrixHomeserverPasswd is not null && matrixHomeserverPasswd.Length > 0;
+        var matrixHomeserverDeviceIdCondition = matrixHomeserverDeviceId is not null && matrixHomeserverDeviceId.Length > 0;
         var matrixHomeserverUrlCondition = matrixHomeserverUrl is not null && matrixHomeserverUrl.Length > 0;
         var matrixHomeserverRoomCondition = matrixHomeserverRoom is not null && matrixHomeserverRoom.Length > 0;
         var matrixNotifierUrlCondition = matrixNotifierUrl is not null && matrixNotifierUrl.Length > 0;
         var matrixNotifierMessageHeaderCondition = matrixNotifierMessageHeader is not null && matrixNotifierMessageHeader.Length > 0;
 
         if (rageshakeDomainCondition && rageshakeDomainToBeReplacedCondition && matrixHomeserverUserCondition &&
-            matrixHomeserverPasswdCondition && matrixHomeserverUrlCondition && matrixHomeserverRoomCondition &&
+            matrixHomeserverPasswdCondition && matrixHomeserverDeviceIdCondition && matrixHomeserverUrlCondition && matrixHomeserverRoomCondition &&
             matrixNotifierUrlCondition && matrixNotifierMessageHeaderCondition)
         {
             var envsDto = new EnvsDto();
@@ -49,6 +52,7 @@ public class EnvironmentService : IEnvironmentService
             envsDto.RageshakeDomainToBeReplaced = rageshakeDomainToBeReplaced;
             envsDto.MatrixHomeserverUser = matrixHomeserverUser;
             envsDto.MatrixHomeserverPasswd = matrixHomeserverPasswd;
+            envsDto.MatrixHomeserverDeviceId = matrixHomeserverDeviceId;
             envsDto.MatrixHomeserverUrl = matrixHomeserverUrl;
             envsDto.MatrixHomeserverRoom = matrixHomeserverRoom;
             envsDto.MatrixNotifierUrl = matrixNotifierUrl;

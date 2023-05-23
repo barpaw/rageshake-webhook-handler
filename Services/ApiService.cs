@@ -20,7 +20,7 @@ public class ApiService : IApiService
         var client = _httpClientFactory.CreateClient("api");
 
         var matrixNotifierBody = new MatrixNotifier(envsDto.MatrixHomeserverUrl, envsDto.MatrixHomeserverUser,
-            envsDto.MatrixHomeserverPasswd, envsDto.MatrixHomeserverRoom, message);
+            envsDto.MatrixHomeserverPasswd, envsDto.MatrixHomeserverRoom, envsDto.MatrixHomeserverDeviceId, message);
 
         var jsonString = JsonSerializer.Serialize(matrixNotifierBody);
 

@@ -143,6 +143,8 @@ public record MatrixNotifier(
     string MatrixHomeserverPasswd,
     [property: JsonPropertyName("matrixHomeserverRoom")]
     string MatrixHomeserverRoom,
+    [property: JsonPropertyName("deviceId")]
+    string DeviceId,
     [property: JsonPropertyName("message")]
     string Message
 );
