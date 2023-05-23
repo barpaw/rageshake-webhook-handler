@@ -11,4 +11,5 @@ Set env variables:
       MATRIX_HOMESERVER_URL: "http://localhost:8008"
       MATRIX_HOMESERVER_USER: "@username:homeserver.com"
       MATRIX_HOMESERVER_PASSWD: "string"
+      MATRIX_HOMESERVER_DEVICEID: "string"
       MATRIX_HOMESERVER_ROOM: "!hash:homeserver.com"
